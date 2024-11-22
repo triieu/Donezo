@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build directories
+/android/
+/ios/
+*.expo/
+
+# Log files
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# Other
+*.log
+
+# Ignore the inner node_modules/
+Donezo/node_modules/
