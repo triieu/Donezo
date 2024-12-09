@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import NavBar from '~/components/NavBar';
 
-const CalendarScreen = () => {
+const CalendarScreen = (props) => {
   const today = new Date();
   const [selectedMonth, setSelectedMonth] = useState(today);
 
@@ -85,27 +86,33 @@ const CalendarScreen = () => {
   };
 
   return (
-    <FlatList
-      data={monthsRange}
-      renderItem={renderMonth}
-      keyExtractor={(item) => item.toISOString()}
-      pagingEnabled
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      initialScrollIndex={monthsRange.findIndex(
-        (month) =>
-          month.getMonth() === today.getMonth() && month.getFullYear() === today.getFullYear()
-      )}
-      getItemLayout={(data, index) => ({
-        length: Dimensions.get('window').width,
-        offset: Dimensions.get('window').width * index,
-        index,
-      })}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={monthsRange}
+        renderItem={renderMonth}
+        keyExtractor={(item) => item.toISOString()}
+        pagingEnabled
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        initialScrollIndex={monthsRange.findIndex(
+          (month) =>
+            month.getMonth() === today.getMonth() && month.getFullYear() === today.getFullYear()
+        )}
+        getItemLayout={(data, index) => ({
+          length: Dimensions.get('window').width,
+          offset: Dimensions.get('window').width * index,
+          index,
+        })}
+      />
+      <NavBar navigation={props.navigation}/>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   calendarContainer: {
     width: Dimensions.get('window').width,
     paddingTop: 20,

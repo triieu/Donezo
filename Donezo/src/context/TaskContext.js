@@ -1,21 +1,21 @@
 import createDataContext from "./createDataContext";
 
-const initialState = [
-    {
-      tasks: []
-    }
-];
+const initialState = {
+    tasks: []
+};
 
 const taskReducer = (state, action) => {
     switch(action.type) {
         case 'ADD_TASK':
-            return [...state, 
-                { 
-                    id: Math.floor(Math.random() * 9999), 
-                    title: action.payload,
-                    completed: false
-                }
-            ];
+            return {...state, 
+                tasks: [ ...state.tasks,
+                    { 
+                        id: Math.floor(Math.random() * 9999), 
+                        title: action.payload,
+                        completed: false
+                    }
+                ]
+            };
         case 'DELETE_TASK':
             return { ...state, tasks: state.tasks.filter(task => task.id !== action.payload) };
         case 'UPDATE_TASK':
