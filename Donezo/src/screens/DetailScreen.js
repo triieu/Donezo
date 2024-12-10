@@ -16,7 +16,6 @@ const DetailScreen = ({ route, navigation }) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     useEffect(()=> {
-        console.log("went back. Route params:", route.params);
         if (!task) {
             navigation.goBack();
         }
@@ -69,6 +68,7 @@ const DetailScreen = ({ route, navigation }) => {
         </TouchableOpacity>
 
         {/* NOTES */}
+        <Text style={styles.noteHeader}>Notes</Text>
         <TextInput
             style={styles.noteContainer}
             value={note}
@@ -140,6 +140,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
         flexDirection: "row",
         justifyContent: "space-between",
+    },
+    noteHeader: {
+        fontSize: 18,
+        padding: 10
     }
 });
 

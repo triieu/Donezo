@@ -17,7 +17,9 @@ const BottomProgressBar = () => {
         const completedTasks = state.tasks.filter(task => task.completed).length;
         const completionPercentage = totalTasks ? completedTasks / totalTasks : 0;
 
-        setProgress(completionPercentage)
+        setTimeout(() => {
+            setProgress(completionPercentage);
+        }, 100);
 
         if (completionPercentage === 1) {
             setEmote('yippie');     // 100%
@@ -34,8 +36,8 @@ const BottomProgressBar = () => {
             <Progress.Bar
                 progress={progress || 0}
                 width={screenWidth * 0.75}
-                height={20}
-                borderRadius={10}
+                height={15}
+                borderRadius={8}
                 color='#97bac9'
                 marginRight={10}
             />
