@@ -12,6 +12,14 @@ const BottomProgressBar = () => {
     const screenWidth = Dimensions.get('window').width;
 
     // calculate completion percentage
+    const getEmoteState = (progress) => {
+        if (progress <= 0.2) return 'sad';          // 0% - 20%
+        if (progress <= 0.4) return 'meh';          // 21% - 40%
+        if (progress <= 0.6) return 'neutral';      // 41% - 60%
+        if (progress <= 0.8) return 'happy';        // 61% - 80%
+        return 'yippie';                            // 81% - 100%
+    };
+      
     useEffect(() => {
         const totalTasks = state.tasks.length;
         const completedTasks = state.tasks.filter(task => task.completed).length;
@@ -21,13 +29,7 @@ const BottomProgressBar = () => {
             setProgress(completionPercentage);
         }, 100);
 
-        if (completionPercentage === 1) {
-            setEmote('yippie');     // 100%
-        } else if (completionPercentage > 0.4) {
-            setEmote('neutral');    // 50% - 100%
-        } else {
-            setEmote('sad');        // 0% - 50%
-        }
+        setEmote(getEmoteState(completionPercentage));
 
     }, [state.tasks]);
 
@@ -43,7 +45,9 @@ const BottomProgressBar = () => {
             />
             <Image
                 source={emote === 'yippie' ? require('assets/happy-49-512.png') :
+                    emote === "happy" ? require('assets/smile-16-512.png') :
                     emote === 'neutral' ? require('assets/neutral-1-512.png') :
+                    emote === 'meh' ? require('assets/frown-open-2-512.png') :
                     require('assets/sad-12-512.png')}
                 style={styles.emote}
             />
