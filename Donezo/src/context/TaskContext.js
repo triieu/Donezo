@@ -25,6 +25,15 @@ const taskReducer = (state, action) => {
                     task.id === action.payload.id ? { ...task, ...action.payload.updates } : task
                 )
             };
+        case 'TASK_COMPLETED':
+            return {
+                ...state,
+                tasks: state.tasks.map((task) =>
+                    task.id === action.payload
+                    ? { ...task, completed: !task.completed }
+                    : task
+                ),
+            }
         default:
             return state;
     }
@@ -32,8 +41,7 @@ const taskReducer = (state, action) => {
 
 // if there's some specific operation you want your components to have, define the operations in the context file
 const addTask = (dispatch) => {
-    return (title) => {
-        console.log("addTask called with title:", title); 
+    return (title) => { 
         dispatch({
             type: 'ADD_TASK',
             payload: title
@@ -47,13 +55,18 @@ const deleteTask = (dispatch) => {
     }
 }
 
-//DO THIS
 const updateTask = (dispatch) => {
     return (id, updates) => {
         dispatch({type: 'UPDATE_TASK', payload: { id, updates}});
     }
 }
 
+const taskCompleted = (dispatch) => {
+    return (id) => {
+        dispatch({type: 'TASK_COMPLETED', payload: id });
+    }
+}
+
 export const {Context, Provider} = createDataContext(taskReducer, 
-                                    {addTask, deleteTask, updateTask}, 
+                                    {addTask, deleteTask, updateTask, taskCompleted}, 
                                     initialState);

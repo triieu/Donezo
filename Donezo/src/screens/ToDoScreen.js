@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Button } from "react-native";
 import { Context as TaskContext } from '../context/TaskContext';
-import TaskModal from "~/components/TaskModal";
-import NavBar from "~/components/NavBar";
+import TaskModal from "../components/TaskModal";
+import NavBar from "../components/NavBar";
+import BottomProgressBar from "~/components/BottomProgressBar";
 
 const ToDoScreen = ({ navigation, route }) => {
   const { addTask } = useContext(TaskContext);
-  const { state } = useContext(TaskContext);
+  const { state, taskCompleted } = useContext(TaskContext);
 
   const [modalVisibility, setModalVisibility] = useState(false);
   useEffect(() => {
@@ -14,6 +15,7 @@ const ToDoScreen = ({ navigation, route }) => {
       setModalVisibility(true);
     }
   }, [route]) 
+  
 
   const [detailedTask, setDetailedTask] = useState({      // probably only display title
     tite: '',
@@ -25,8 +27,17 @@ const ToDoScreen = ({ navigation, route }) => {
   const renderTask = ({ item }) =>  {
     return (
       <View style={styles.taskContainer}>
+        <TouchableOpacity
+          style={[styles.checkbox, item.completed && styles.checked]}
+          onPress={() => taskCompleted(item.id)}
+        />
         <TouchableOpacity onPress={() => navigation.navigate("Details", { taskId: item.id })}>
-          <Text style={styles.text}>{item.title}</Text>
+          <Text 
+            style={[
+              styles.text,
+              item.completed && { textDecorationLine: 'line-through' },
+              ]}> {item.title}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -57,6 +68,8 @@ const ToDoScreen = ({ navigation, route }) => {
         renderItem={renderTask}
       />
 
+      <BottomProgressBar />
+
       <NavBar navigation={navigation}/>
     </View>
   );
@@ -68,18 +81,23 @@ const styles = StyleSheet.create({
     },
     taskContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      //justifyContent: 'space-between',
       padding: 10,
       marginVertical: 5,
       marginHorizontal: 10,
       backgroundColor: '#f9f9f9',
     },
     text: {
-      fontSize: 18
+      fontSize: 20
     },
-    taskInformation: {
-
-    }
+    checkbox: {
+      width: 25,
+      height: 25,
+      borderRadius: 5,
+      borderWidth: 2,
+      borderColor: '#ccc',
+      marginRight: 10,
+    },
 });
 
 export default ToDoScreen;

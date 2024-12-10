@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#dbdbdb',
         flex:1,
         borderColor: 'black',
-        borderWidth: 1,
+        borderTopWidth: 1,
         paddingVertical: 5
     },
     icons: {
