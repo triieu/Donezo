@@ -10,7 +10,6 @@ const ToDoScreen = ({ navigation, route }) => {
 
   const [modalVisibility, setModalVisibility] = useState(false);
   useEffect(() => {
-    console.log('route.params:', route.params);
     if (route?.params?.modalVisibility) {
       setModalVisibility(true);
     }
@@ -26,7 +25,7 @@ const ToDoScreen = ({ navigation, route }) => {
   const renderTask = ({ item }) =>  {
     return (
       <View style={styles.taskContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Details", { taskId: item.id })}>
           <Text style={styles.text}>{item.title}</Text>
         </TouchableOpacity>
       </View>
@@ -41,8 +40,6 @@ const ToDoScreen = ({ navigation, route }) => {
     }
   };
   
-  console.log("Current tasks: ", state.tasks);
-  console.log('Modal Visibility:', modalVisibility);
   return (
     <View style={styles.container}>
 
@@ -72,10 +69,10 @@ const styles = StyleSheet.create({
     taskContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      padding: 16,
-      marginVertical: 8,
+      padding: 10,
+      marginVertical: 5,
+      marginHorizontal: 10,
       backgroundColor: '#f9f9f9',
-      borderRadius: 8,
     },
     text: {
       fontSize: 18

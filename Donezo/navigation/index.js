@@ -5,6 +5,8 @@ import Overview from '../src/screens/overview';
 import CalendarScreen from '../src/screens/CalendarScreen';
 import ToDoScreen from '../src/screens/ToDoScreen';
 import AddButton from '~/components/AddButton';
+import DetailScreen from '~/screens/DetailScreen';
+import { BackButton } from '~/components/BackButton';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,13 @@ export default function RootStack() {
           component={CalendarScreen}
           options={({ navigation }) => ({
             headerLeft: () => <AddButton onPress={() => navigation.navigate('Calendar', { modalVisibility: true })} />,
+          })}
+        />
+        <Stack.Screen
+          name="Details"
+          component={DetailScreen}
+          options={({ navigation }) => ({
+            headerLeft: () => <BackButton onPress={navigation.goBack} />,
           })}
         />
       </Stack.Navigator>
