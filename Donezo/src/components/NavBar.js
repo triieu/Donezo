@@ -25,20 +25,25 @@ const NavBar = ( { navigation } ) => {
 const styles = StyleSheet.create({
     safeArea: {
         backgroundColor: 'black',
+        height: 80
     },
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
-        paddingVertical: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
         position: 'absolute',
-        bottom: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: '#dbdbdb',
+        width: '100%',
+        height: 70
     },
     button: {
-        backgroundColor: '#dbdbdb',
         flex:1,
         borderColor: 'black',
         borderTopWidth: 1,
-        paddingVertical: 5
+        paddingVertical: 10
     },
     icons: {
         width: 50,
