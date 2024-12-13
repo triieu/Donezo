@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import NavBar from '~/components/NavBar';
 
 const CalendarScreen = ({ navigation }) => {
   const today = new Date();
@@ -118,6 +119,7 @@ const CalendarScreen = ({ navigation }) => {
           setSelectedMonth(monthsRange[index]);
         }}
       />
+      <NavBar navigation={navigation} />
     </View>
   );
 };
