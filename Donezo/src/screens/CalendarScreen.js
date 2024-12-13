@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
-import NavBar from '~/components/NavBar';
+import { View, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 
-const CalendarScreen = (props) => {
+const CalendarScreen = ({ navigation }) => {
   const today = new Date();
   const [selectedMonth, setSelectedMonth] = useState(today);
-
   const startDate = new Date(2024, 0, 1); // January 2024
   const endDate = new Date(2025, 11, 31); // December 2025
 
   const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+  const handleDayPress = (day) => {
+    if (!day) {
+      return;
+    }
+
+    const selectedDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), day);
+
+    navigation.navigate('To Do', {selectedDate: selectedDate});
+  }
 
   const getDaysInMonth = (month, year) => {
     return new Date(year, month + 1, 0).getDate();
@@ -39,9 +47,9 @@ const CalendarScreen = (props) => {
       selectedMonth.getFullYear() === today.getFullYear();
 
     return (
-      <View style={[styles.dayBox, isToday && styles.todayBox]}>
+      <TouchableOpacity onPress={() => handleDayPress(item)} disabled={!item} style={[styles.dayBox, isToday && styles.todayBox]}>
         <Text style={styles.dayText}>{item}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -103,21 +111,26 @@ const CalendarScreen = (props) => {
           offset: Dimensions.get('window').width * index,
           index,
         })}
+        onMomentumScrollEnd={(event) => {
+          const index = Math.round(
+            event.nativeEvent.contentOffset.x / Dimensions.get('window').width
+          );
+          setSelectedMonth(monthsRange[index]);
+        }}
       />
-      <NavBar navigation={props.navigation}/>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white',
   },
   calendarContainer: {
     width: Dimensions.get('window').width,
     paddingTop: 20,
     alignItems: 'center',
-    backgroundColor: 'white'
   },
   headerText: {
     fontSize: 18,

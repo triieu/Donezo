@@ -24,6 +24,16 @@ const ToDoScreen = ({ navigation, route }) => {
     date: ''
   });
 
+  const selectedDay = route.params?.selectedDay || new Date().getDate();
+
+  const tasks = [
+    { id: 1, date: 1, title: 'example 1' },
+    { id: 2, date: 15, title: 'example 2' },
+    { id: 3, date: new Date().getDate(), title: 'example 3' }
+  ];
+
+  const filteredTasks = tasks.filter(task => task.date === selectedDay);
+
   const renderTask = ({ item }) =>  {
     return (
       <View style={styles.taskContainer}>
