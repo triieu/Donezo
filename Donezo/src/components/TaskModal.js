@@ -1,15 +1,30 @@
 import React, { useState, useContext } from 'react';
-import { Modal, View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { Modal, View, TextInput, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Context } from "../context/TaskContext";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TaskModal = ({ isVisible, onClose }) => {
     const [task, setTask] = useState('');
     const { addTask } = useContext(Context);
-    
+
+    // date stuff
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [date, setDate] = useState(new Date());
+
+    const handleDateChange = (event, selectedDate) => {
+        setShowDatePicker(false);
+        if (selectedDate) {
+            setDate(selectedDate);
+        }
+    }
+
     const handleAddTask = () => {
-        addTask(task);
-        setTask('');
-        onClose();
+        if (task.trim()) {
+            addTask(task, date);
+            setTask('');
+            setDate(new Date());
+            onClose();
+        }
     }
 
     return (
@@ -22,12 +37,38 @@ const TaskModal = ({ isVisible, onClose }) => {
             <View style={styles.container}>
                 <View style={styles.box}>
                     <Text style={styles.title}>Create New Task</Text>
+                    
                     <TextInput
                         style={styles.input}
                         placeholder="Task Title"
                         value={task}
                         onChangeText={(text) => setTask(text)}
                     />
+
+                    {/* DATE STUFF */}
+                    <TouchableOpacity onPress={() => setShowDatePicker(!showDatePicker)} style={styles.dateContainer}>
+                        <Text style={styles.dateTitle}>Date: </Text>
+                        {showDatePicker ? (
+                            <DateTimePicker
+                                value={date || new Date()}
+                                mode="date"
+                                display="default"
+                                onChange={(event, selectedDate) => {
+                                    setShowDatePicker(false);
+                                    if (selectedDate) {
+                                        setDate(selectedDate);
+                                    }
+                                }}
+                            />
+                        ) : (
+                            <Text style={styles.rowValue}>
+                                {date ? date.toDateString() : "Set due date"}
+                            </Text>
+                        )}
+                        
+                    </TouchableOpacity>
+
+
                     <View style={styles.buttonContainer}>
                         <Button title="Cancel" onPress={onClose} />
                         <Button title="Add Task" onPress={handleAddTask} />
@@ -70,6 +111,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
+    },
+    dateContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    dateTitle: {
+        fontSize: 18,
+        marginRight: 10
+    },
+    rowValue: {
+        fontSize: 18
     },
 });
 

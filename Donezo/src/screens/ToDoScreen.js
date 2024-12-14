@@ -19,7 +19,7 @@ const ToDoScreen = ({ navigation, route }) => {
   
 
   const [detailedTask, setDetailedTask] = useState({      // probably only display title
-    tite: '',
+    title: '',
     note: '',
     time: '',
     date: ''
@@ -46,7 +46,7 @@ const ToDoScreen = ({ navigation, route }) => {
 
   const handleDetailedTask = () => {
     if (detailedTask.title.trim()) {
-      addTask({detailedTask});
+      addTask({title, date});
       setDetailedTask({ title: '', notes: '', time: '', date: '' });  // rest
       setModalVisibility(false);  // close modal
     }

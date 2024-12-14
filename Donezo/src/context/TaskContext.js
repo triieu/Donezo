@@ -12,7 +12,8 @@ const taskReducer = (state, action) => {
                     { 
                         id: Math.floor(Math.random() * 9999), 
                         title: action.payload.title,
-                        completed: false
+                        completed: false,
+                        date: action.payload.date
                     }
                 ]
             };
@@ -44,7 +45,7 @@ const addTask = (dispatch) => {
     return (title, date) => { 
         dispatch({
             type: 'ADD_TASK',
-            payload: { title }
+            payload: { title, date }
         });
     }
 }

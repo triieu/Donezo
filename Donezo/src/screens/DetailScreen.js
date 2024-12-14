@@ -12,7 +12,7 @@ const DetailScreen = ({ route, navigation }) => {
     })
     const [title, setTitle] = useState(task?.title || "");
     const [note, setNote] = useState(task?.note || "");
-    const [dueDate, setDueDate] = useState(task?.dueDate ? new Date(task.dueDate) : null);
+    const [date, setDate] = useState(task?.date ? new Date(task.date) : null);
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     useEffect(()=> {
@@ -22,14 +22,14 @@ const DetailScreen = ({ route, navigation }) => {
     }, [task]);
 
     const handleSave = () => {
-        updateTask(taskId, { title, note, dueDate });
+        updateTask(taskId, { title, note, date });
         navigation.goBack();
     };
 
     const handleDateChange = (event, selectedDate) => {
-        setShowDatePicker(false);D
+        setShowDatePicker(false);
         if (selectedDate) {
-            setDueDate(selectedDate);
+            setDate(selectedDate);
         }
     };
 
@@ -48,20 +48,20 @@ const DetailScreen = ({ route, navigation }) => {
             <Text style={styles.rowLabel}>Due Date</Text>
             {showDatePicker ? (
                 <DateTimePicker
-                    value={dueDate || new Date()}
+                    value={date || new Date()}
                     mode="date"
                     display="default"
                     onChange={(event, selectedDate) => {
                         setShowDatePicker(false);
                         if (selectedDate) {
-                            setDueDate(selectedDate);
+                            setDate(selectedDate);
                         }
                     }}
                     style={styles.datePicker}
                 />
             ) : (
                 <Text style={styles.rowValue}>
-                    {dueDate ? dueDate.toDateString() : "Set due date"}
+                    {date ? date.toDateString() : "Set due date"}
                 </Text>
             )}
             
