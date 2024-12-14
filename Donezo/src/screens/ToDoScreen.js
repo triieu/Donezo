@@ -4,6 +4,7 @@ import { Context as TaskContext } from '../context/TaskContext';
 import TaskModal from "../components/TaskModal";
 import NavBar from "../components/NavBar";
 import BottomProgressBar from "~/components/BottomProgressBar";
+import { Ionicons } from '@expo/vector-icons';
 
 const ToDoScreen = ({ navigation, route }) => {
   const { addTask } = useContext(TaskContext);
@@ -97,7 +98,15 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor: '#ccc',
       marginRight: 10,
+      justifyContent: 'center', 
+      alignItems: 'center',    
+      marginRight: 12,
+      backgroundColor: 'white'
     },
+    checked: {
+      backgroundColor: '#ccc',
+      borderColor: '#ccc'
+    }
 });
 
 export default ToDoScreen;

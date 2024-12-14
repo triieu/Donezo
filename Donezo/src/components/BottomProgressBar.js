@@ -17,7 +17,8 @@ const BottomProgressBar = () => {
         if (progress <= 0.4) return 'meh';          // 21% - 40%
         if (progress <= 0.6) return 'neutral';      // 41% - 60%
         if (progress <= 0.8) return 'happy';        // 61% - 80%
-        return 'yippie';                            // 81% - 100%
+        if (progress <= 0.99) return 'happier';       // 81% - 99%
+        return 'yippie';                            // 100%
     };
       
     useEffect(() => {
@@ -48,6 +49,7 @@ const BottomProgressBar = () => {
                     emote === "happy" ? require('assets/smile-16-512.png') :
                     emote === 'neutral' ? require('assets/neutral-1-512.png') :
                     emote === 'meh' ? require('assets/frown-open-2-512.png') :
+                    emote === 'happier' ? require('assets/mood-happy-1-512.png') :
                     require('assets/sad-12-512.png')}
                 style={styles.emote}
             />
