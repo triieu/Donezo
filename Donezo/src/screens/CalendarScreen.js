@@ -5,6 +5,7 @@ import NavBar from '~/components/NavBar';
 const CalendarScreen = ({ navigation }) => {
   const today = new Date();
   const [selectedMonth, setSelectedMonth] = useState(today);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const startDate = new Date(2024, 0, 1); // January 2024
   const endDate = new Date(2025, 11, 31); // December 2025
 
@@ -38,11 +39,18 @@ const CalendarScreen = ({ navigation }) => {
       selectedMonth.getFullYear() === today.getFullYear();
 
     return (
-      <TouchableOpacity onPress={() => handleDayPress(item)} disabled={!item} style={[styles.dayBox, isToday && styles.todayBox]}>
+      <TouchableOpacity onPress={() => handleDateSelect(item)} disabled={!item} style={[styles.dayBox, isToday && styles.todayBox]}>
         <Text style={styles.dayText}>{item}</Text>
       </TouchableOpacity>
     );
   };
+
+  /* DATE STUFF */
+  const handleDateSelect = (day) => {
+    fullDate = new Date(selectedMonth.getFullYear, selectedMonth.getMonth(), day);
+    setSelectedDate(fullDate);
+    navigation.navigate('To Do', { selectedDate: fullDate });
+  }
 
   const getMonthsRange = (start, end) => {
     const months = [];
