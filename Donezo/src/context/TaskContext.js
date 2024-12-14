@@ -11,7 +11,7 @@ const taskReducer = (state, action) => {
                 tasks: [ ...state.tasks,
                     { 
                         id: Math.floor(Math.random() * 9999), 
-                        title: action.payload,
+                        title: action.payload.title,
                         completed: false
                     }
                 ]
@@ -41,10 +41,10 @@ const taskReducer = (state, action) => {
 
 // if there's some specific operation you want your components to have, define the operations in the context file
 const addTask = (dispatch) => {
-    return (title) => { 
+    return (title, date) => { 
         dispatch({
             type: 'ADD_TASK',
-            payload: title
+            payload: { title }
         });
     }
 }

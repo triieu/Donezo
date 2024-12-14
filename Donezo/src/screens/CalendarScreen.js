@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions, TouchableOpacity } from 'react-native';
 import NavBar from '~/components/NavBar';
 
@@ -9,16 +9,6 @@ const CalendarScreen = ({ navigation }) => {
   const endDate = new Date(2025, 11, 31); // December 2025
 
   const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-  const handleDayPress = (day) => {
-    if (!day) {
-      return;
-    }
-
-    const selectedDate = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth(), day);
-
-    navigation.navigate('To Do', {selectedDate: selectedDate});
-  }
 
   const getDaysInMonth = (month, year) => {
     return new Date(year, month + 1, 0).getDate();
@@ -99,7 +89,7 @@ const CalendarScreen = ({ navigation }) => {
       <FlatList
         data={monthsRange}
         renderItem={renderMonth}
-        keyExtractor={(item) => item.toISOString()}
+        keyExtractor={(item) => item.toString()}
         pagingEnabled
         horizontal
         showsHorizontalScrollIndicator={false}

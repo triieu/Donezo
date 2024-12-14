@@ -18,7 +18,10 @@ export default function RootStack() {
         <Stack.Screen
           name="To Do"
           component={ToDoScreen}
-          options={({ navigation }) => ({
+          options={({ route, navigation }) => ({
+            title: route?.params?.selectedDate
+              ? `${new Date(route.params.selectedDate).toDateString()}`
+              : 'To Do',
             headerLeft: () => <AddButton onPress={() => navigation.navigate('To Do', { modalVisibility: true })} />,
           })}
         />
